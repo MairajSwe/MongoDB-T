@@ -1,14 +1,17 @@
-const mongoose = require ("mongoose")
+const  mongoose = require ("mongoose")
+const MongoClient = require('mongodb').MongoClient;
 //connecting to database
-
 const connectDatabase = async () => {
-    try {
-        await mongoose.connect("mongodb://localhost:27017/productsDB")
-        console.log("database is connected")
-    } catch (error) {
-        console.log(error)
-        process.exit(1)     // 1 uses for true to stop and 0 is use for false not stop ..
-    }
+    const uri =
+    "mongodb://mairaj:mairaj@localhost:8006/shop";
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+  client.connect((err) => {
+    // perform actions on the collection object
+    console.log("connect database successfully ...");
+    client.close();
+  });
 }
-
 module.exports = connectDatabase

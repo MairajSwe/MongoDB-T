@@ -1,6 +1,8 @@
-const Product = require("./model/products")
+const Product = require("../models/products")
 const { v4: uuidv4 } = require('uuid');
 
+
+//get all products
 const getProducts = async (req, res) => {
    try {
     const products = await Product.find()
@@ -11,7 +13,7 @@ const getProducts = async (req, res) => {
    }
 }
 
-// getting.
+// getting. product by id
 const getProduct = async (req, res) => {
     try {
     const Product = await Product.findOne({id: req.params.id})
@@ -26,6 +28,7 @@ const getProduct = async (req, res) => {
     }
  }
 
+ // delete product by id
 const deleteProduct = async (req, res) => {
     try {
     const product = await Product.findOne({id: req.params.id})
@@ -43,7 +46,7 @@ const deleteProduct = async (req, res) => {
     }
  }
 
-
+ // add / create product by id
 const addProduct = async (req, res) => {
     try {
         const product = await Product.findOne({id: req.params.id})
@@ -62,12 +65,15 @@ const addProduct = async (req, res) => {
     }
  }
 
+
+ // update / put product by id
  const updateProduct = async (req, res) => {
    let id = req.params.id
     try {        
         const product = await Product.findOne({id: req.params.id})
         if(product) {
-           await Product.updateOne({
+           await Product.updateOne(
+            {
             id},
 
             {
@@ -75,6 +81,7 @@ const addProduct = async (req, res) => {
                   title: req.body.title,
                   price: req.body.price
               }
+              
             })
            res.status(200).send({
                message : "Product is updated"
